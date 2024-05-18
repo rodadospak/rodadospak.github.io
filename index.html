@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captura de Firma</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Por favor, firme abajo</h2>
+    <canvas id="canvas" width="300" height="200"></canvas>
+    <br>
+    <button id="clear">Borrar</button>
+    <button id="save">Guardar Firma</button>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var drawing = false;
+
+        canvas.addEventListener('mousedown', function(e) {
+            drawing = true;
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        canvas.addEventListener('mousemove', function(e) {
+            if (drawing) {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        });
+
+        canvas.addEventListener('mouseup', function() {
+            drawing = false;
+        });
+
+        document.getElementById('clear').addEventListener('click', function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        document.getElementById('save').addEventListener('click', function() {
+            var dataURL = canvas.toDataURL();
+            var name = prompt("Ingrese su nombre para registrar la firma:");
+            if (name) {
+                fetch('https://script.google.com/macros/s/AKfycbxMKDw08b4_5T1OD-oNTYYy3zeQI-1hi67vcHK6VA_bt0OSBo8el74pbn2xgAXzAWFb/exec', {
+                    method: 'POST',
+                    body: JSON.stringify({ name: name, image: dataURL }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.status === 'success') {
+                          alert('Firma guardada exitosamente');
+                          window.location.href = 'https://www.example.com/thank-you'; // Redireccionar a una página de agradecimiento
+                      } else {
+                          alert('Error al guardar la firma');
+                      }
+                  });
+            }
+        });
+    </script>
+</body>
+</html>
