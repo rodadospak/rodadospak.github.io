@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <h2>Por favor, firme abajoo</h2>
+    <h2>Por favor, firme abajito</h2>
     <canvas id="canvas" width="300" height="200"></canvas>
     <br>
     <button id="clear">Borrar</button>
@@ -55,29 +55,26 @@
 
         document.getElementById('save').addEventListener('click', function() {
             var dataURL = canvas.toDataURL();
-            var name = prompt("Ingrese su nombre para registrar la firma:");
-            if (name) {
-                document.getElementById('save').disabled = true;  // Deshabilitar el botón de guardar
-                fetch('https://script.google.com/macros/s/AKfycby6GNqMIFWxLPZ7JIYlLH0CXUOnm6xlWFQz_KSP_GrpI9w4GsqXcsHV8BkYRjq1wdXp/exec', {
-                    method: 'POST',
-                    body: JSON.stringify({ name: name, image: dataURL }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => response.json())
-                  .then(data => {
-                      document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
-                      if (data.status === 'success') {
-                          alert('Firma guardada exitosamente');
-                          window.location.href = 'https://www.google.com'; // Redireccionar a una página de agradecimiento
-                      } else {
-                          alert('Error al guardar la firma');
-                      }
-                  }).catch(error => {
-                      document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
-                      alert('Ocurrió un error: ' + error.message);
-                  });
-            }
+            document.getElementById('save').disabled = true;  // Deshabilitar el botón de guardar
+            fetch('https://script.google.com/macros/s/AKfycbz-CNFe_CATjMLzAfOPTqwzizz66jqDhwOWdMckxxBiO2UCvEFEK-og1um9Z9Zj_KvV/exec', {
+                method: 'POST',
+                body: JSON.stringify({ image: dataURL }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
+                  if (data.status === 'success') {
+                      alert('Firma guardada exitosamente');
+                      window.location.href = 'https://www.example.com/thank-you'; // Redireccionar a una página de agradecimiento
+                  } else {
+                      alert('Error al guardar la firma');
+                  }
+              }).catch(error => {
+                  document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
+                  alert('Ocurrió un error: ' + error.message);
+              });
         });
     </script>
 </body>
