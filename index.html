@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +57,8 @@
             var dataURL = canvas.toDataURL();
             var name = prompt("Ingrese su nombre para registrar la firma:");
             if (name) {
-                fetch('https://script.google.com/macros/s/AKfycbxMKDw08b4_5T1OD-oNTYYy3zeQI-1hi67vcHK6VA_bt0OSBo8el74pbn2xgAXzAWFb/exec', {
+                document.getElementById('save').disabled = true;  // Deshabilitar el botón de guardar
+                fetch('https://script.google.com/macros/s/AKfycby6GNqMIFWxLPZ7JIYlLH0CXUOnm6xlWFQz_KSP_GrpI9w4GsqXcsHV8BkYRjq1wdXp/exec', {
                     method: 'POST',
                     body: JSON.stringify({ name: name, image: dataURL }),
                     headers: {
@@ -65,12 +66,16 @@
                     }
                 }).then(response => response.json())
                   .then(data => {
+                      document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
                       if (data.status === 'success') {
                           alert('Firma guardada exitosamente');
-                          window.location.href = 'https://www.example.com/thank-you'; // Redireccionar a una página de agradecimiento
+                          window.location.href = 'https://www.google.com'; // Redireccionar a una página de agradecimiento
                       } else {
                           alert('Error al guardar la firma');
                       }
+                  }).catch(error => {
+                      document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
+                      alert('Ocurrió un error: ' + error.message);
                   });
             }
         });
