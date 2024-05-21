@@ -56,7 +56,7 @@
         document.getElementById('save').addEventListener('click', function() {
             var dataURL = canvas.toDataURL();
             document.getElementById('save').disabled = true;  // Deshabilitar el botón de guardar
-            fetch('https://script.google.com/macros/s/AKfycbzLKmGdhE4l-muK48lyZ12PG9W9YO-cudx6ekCWj-73VTs_77P7B4gYnBELiMi2hQdx/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbzv2aemQt4bq52HiI6fRD5YRiVGJ2zZvV86vTdg2XwmGDcWni8Lrw5ocf_3eShQ29hC/exec', {
                 method: 'POST',
                 body: JSON.stringify({ image: dataURL }),
                 headers: {
