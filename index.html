@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <h2>Por favor, firme abajo</h2>
+    <h2>Por favor, firme abajoo</h2>
     <canvas id="canvas" width="300" height="200"></canvas>
     <br>
     <button id="clear">Borrar</button>
@@ -56,7 +56,7 @@
         document.getElementById('save').addEventListener('click', function() {
             var dataURL = canvas.toDataURL();
             document.getElementById('save').disabled = true;  // Deshabilitar el botón de guardar
-            fetch('https://script.google.com/macros/s/AKfycbxO1uSKlcKH-k9FVKynuKIdwR7TWYSHpeoqGOPTYOEF9XhddewSQEIoNSRJcgLLHt_3/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbwk5-c_btlOAz2osCfHqbB4c4QFjfzs1Nqqt3TNmPAS92SGIUzO68bwu1uqM0dpeW3t/exec', {
                 method: 'POST',
                 body: JSON.stringify({ image: dataURL }),
                 headers: {
