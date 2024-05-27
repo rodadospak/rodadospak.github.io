@@ -1,81 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Captura de Firma</title>
-    <style>
-        canvas {
-            border: 1px solid black;
-            display: block;
-            margin: 0 auto;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        button {
-            margin: 10px;
-        }
-    </style>
+    <title>Capturar Firma</title>
 </head>
 <body>
-    <h2>Por favor, firme abajin</h2>
-    <canvas id="canvas" width="300" height="200"></canvas>
+    <h1>Por favor, firma aquí</h1>
+    <canvas id="canvas" width="400" height="200" style="border:1px solid black;"></canvas>
     <br>
-    <button id="clear">Borrar</button>
-    <button id="save">Guardar Firma</button>
-    <script>
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
-        var drawing = false;
-
-        canvas.addEventListener('mousedown', function(e) {
-            drawing = true;
-            ctx.moveTo(e.offsetX, e.offsetY);
-        });
-
-        canvas.addEventListener('mousemove', function(e) {
-            if (drawing) {
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.stroke();
-            }
-        });
-
-        canvas.addEventListener('mouseup', function() {
-            drawing = false;
-        });
-
-        document.getElementById('clear').addEventListener('click', function() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        });
-
-        document.getElementById('save').addEventListener('click', function() {
-            var dataURL = canvas.toDataURL();
-            document.getElementById('save').disabled = true;  // Deshabilitar el botón de guardar
-            fetch('https://script.google.com/macros/s/AKfycbzv2aemQt4bq52HiI6fRD5YRiVGJ2zZvV86vTdg2XwmGDcWni8Lrw5ocf_3eShQ29hC/exec', {
-                method: 'POST',
-                body: JSON.stringify({ image: dataURL }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => response.json())
-              .then(data => {
-                  document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
-                  if (data.status === 'success') {
-                      alert('Firma guardada exitosamente');
-                      window.location.href = 'https://www.example.com/thank-you'; // Redireccionar a una página de agradecimiento
-                  } else {
-                      alert('Error al guardar la firma');
-                  }
-              }).catch(error => {
-                  document.getElementById('save').disabled = false;  // Habilitar el botón de guardar
-                  alert('Ocurrió un error: ' + error.message);
-              });
-        });
-    </script>
+    <button onclick="guardarFirma()">Guardar Firma</button>
+    <script src="firma.js"></script>
 </body>
 </html>
