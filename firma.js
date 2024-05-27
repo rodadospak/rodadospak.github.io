@@ -1,5 +1,12 @@
 var canvas = document.getElementById('canvas');
-var signaturePad = new SignaturePad(canvas);
+var signaturePad = new SignaturePad(canvas, {
+    // Habilitar soporte táctil
+    onBegin: function (event) {
+        if (event.type === "mousedown") {
+            return;
+        }
+    }
+});
 
 function guardarFirma() {
     if (signaturePad.isEmpty()) {
