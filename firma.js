@@ -1,10 +1,16 @@
-function guardarFirma() {
-    var canvas = document.getElementById("canvas");
-    var imagen = canvas.toDataURL(); // Convertir el contenido del canvas a una imagen
+var canvas = document.getElementById('canvas');
+var signaturePad = new SignaturePad(canvas);
 
-    // Crear un enlace temporal para descargar la imagen
-    var enlace = document.createElement("a");
-    enlace.href = imagen;
-    enlace.download = "firma.png";
-    enlace.click();
+function guardarFirma() {
+    if (signaturePad.isEmpty()) {
+        alert("Por favor, firma primero.");
+    } else {
+        var imagen = signaturePad.toDataURL(); // Convertir la firma en una imagen base64
+
+        // Crear un enlace temporal para descargar la imagen
+        var enlace = document.createElement("a");
+        enlace.href = imagen;
+        enlace.download = "firma.png";
+        enlace.click();
+    }
 }
