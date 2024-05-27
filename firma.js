@@ -1,12 +1,5 @@
 var canvas = document.getElementById('canvas');
-var signaturePad = new SignaturePad(canvas, {
-    // Habilitar soporte táctil
-    onBegin: function (event) {
-        if (event.type === "mousedown") {
-            return;
-        }
-    }
-});
+var signaturePad = new SignaturePad(canvas);
 
 function guardarFirma() {
     if (signaturePad.isEmpty()) {
@@ -19,5 +12,12 @@ function guardarFirma() {
         enlace.href = imagen;
         enlace.download = "firma.png";
         enlace.click();
+
+        // Borrar la firma actual
+        signaturePad.clear();
     }
+}
+
+function borrarFirma() {
+    signaturePad.clear(); // Borrar la firma actual
 }
