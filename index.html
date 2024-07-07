@@ -1,35 +1,25 @@
-var canvas = document.getElementById('canvas');
-
-// Asegúrate de que el lienzo tenga la misma relación de aspecto y resolución del dispositivo
-function resizeCanvas() {
-    var ratio = Math.max(window.devicePixelRatio || 1, 1);
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
-}
-
-window.onresize = resizeCanvas;
-resizeCanvas();
-
-var signaturePad = new SignaturePad(canvas);
-
-function guardarFirma() {
-    if (signaturePad.isEmpty()) {
-        alert("Por favor, firma primero.");
-    } else {
-        var imagen = signaturePad.toDataURL(); // Convertir la firma en una imagen base64
-
-        // Crear un enlace temporal para descargar la imagen
-        var enlace = document.createElement("a");
-        enlace.href = imagen;
-        enlace.download = "firma.png";
-        enlace.click();
-
-        // Borrar la firma actual
-        signaturePad.clear();
-    }
-}
-
-function borrarFirma() {
-    signaturePad.clear(); // Borrar la firma actual
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capturar Firma</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+    <style>
+        /* Puedes ajustar estos valores según tus necesidades */
+        #canvas {
+            border: 1px solid black;
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Por favor, firma aquí</h1>
+    <canvas id="canvas" width="500" height="300"></canvas>
+    <br>
+    <button onclick="guardarFirma()">Guardar Firma</button>
+    <button onclick="borrarFirma()">Borrar Firma</button>
+    <script src="firma.js"></script>
+</body>
+</html>
